@@ -5,7 +5,7 @@ import java.util.Date;
 
 public interface DesenvolvedorDTO {
 
-    String getId();
+    Long getId();
     String getNome();
     String getCpf();
     String getEmail();

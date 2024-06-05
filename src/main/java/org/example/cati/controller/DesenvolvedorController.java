@@ -43,14 +43,14 @@ public class DesenvolvedorController {
 
     @PutMapping("/editarDesenvolvedor")
     @Transactional
-    public ResponseEntity editarDesenvolvedor(Desenvolvedor desenvolvedor){
+    public ResponseEntity editarDesenvolvedor(@RequestBody Desenvolvedor desenvolvedor){
         this.service.editarDev(desenvolvedor);
         return ResponseEntity.ok().body(desenvolvedor);
     }
 
-    @DeleteMapping("/deletarDesenvolvedor")
+    @DeleteMapping("{id}")
     @Transactional
-    public ResponseEntity deletarDesenvolvedor(Long id) {
+    public ResponseEntity deletarDesenvolvedor(@PathVariable Long id) {
         this.service.removerDev(id);
         return ResponseEntity.noContent().build();
     }

@@ -27,9 +27,11 @@ public class DesenvolvedorService {
     public Desenvolvedor buscarDev(Long id) {
         return this.repository.getById(id);
     }
+
     public void removerDev(Long id) {
         this.repository.deleteById(id);
     }
+
     public void editarDev(Desenvolvedor desenvolvedor) {
 
         Desenvolvedor dev = this.repository.getReferenceById(desenvolvedor.getId());

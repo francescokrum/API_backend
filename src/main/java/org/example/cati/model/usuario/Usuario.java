@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.cati.model.desenvolvedor.dto.DesenvolvedorDTO;
 
 @Entity(name = "usuario")
 @Table(name = "usuario")

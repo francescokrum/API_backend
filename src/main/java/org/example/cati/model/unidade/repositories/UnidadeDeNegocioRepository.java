@@ -11,6 +11,9 @@ public interface UnidadeDeNegocioRepository extends JpaRepository<UnidadeDeNegoc
 
     UnidadeDeNegocio getById(Long id);
     Optional<UnidadeDeNegocio> findById(Long id);
+    Optional<UnidadeDeNegocio> findByCnpj(String cnpj);
     LinkedList<UnidadeDeNegocioDTO> findAllBy();
+
+    boolean existsById(Long id);
 
 }

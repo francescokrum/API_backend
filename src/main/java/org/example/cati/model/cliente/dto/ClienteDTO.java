@@ -2,7 +2,6 @@ package org.example.cati.model.cliente.dto;
 
 public interface ClienteDTO {
 
-    Long getId();
     String getNome();
     String getCpf();
     String getEmail();

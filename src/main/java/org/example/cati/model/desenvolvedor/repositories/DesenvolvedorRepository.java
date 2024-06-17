@@ -15,4 +15,9 @@ public interface DesenvolvedorRepository extends JpaRepository<Desenvolvedor, Lo
     Optional<Desenvolvedor> findById(Long id_usuario);
     LinkedList<DesenvolvedorDTO> findAllBy();
 
+    boolean existsByCpf(String cpf);
+
+    boolean existsByEmail(String email);
+
+    boolean existsByLogin(String login);
 }

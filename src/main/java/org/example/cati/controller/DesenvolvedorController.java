@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/desenvolvedor")
+@CrossOrigin("*")
 public class DesenvolvedorController {
 
     private final DesenvolvedorService service;
@@ -31,14 +32,14 @@ public class DesenvolvedorController {
 
     @GetMapping
     @Transactional
-    public ResponseEntity<List<DesenvolvedorDTO>> listarDesenvolvedores() {
-        return ResponseEntity.ok(this.service.listarDevs());
+    public List<DesenvolvedorDTO> buscaDesenvolvedores() {
+        return this.service.buscarDevs();
     }
 
     @GetMapping("{id}")
     @Transactional
     public Desenvolvedor buscaDesenvolvedor(@PathVariable Long id) {
-        return this.service.buscarDev(id);
+        return this.service.buscarDevPorId(id);
     }
 
     @PutMapping("/editarDesenvolvedor")

@@ -45,10 +45,8 @@ public class ClienteService {
     }
 
     public void editarCliente(Cliente cliente) {
-        // Obtém o cliente existente pelo ID
         Cliente cli = this.repository.getReferenceById(cliente.getId());
 
-        // Atualiza os campos do cliente com os valores fornecidos
         cli.setNome(cliente.getNome());
         cli.setCpf(cliente.getCpf());
         cli.setEmail(cliente.getEmail());
@@ -56,24 +54,18 @@ public class ClienteService {
         cli.setLogin(cliente.getLogin());
         cli.setSenha(cliente.getSenha());
 
-        // Verifica se o CNPJ da unidade de negócio foi alterado
         if (!cli.getCnpj_unidade().equals(cliente.getCnpj_unidade())) {
-            // Atualiza o CNPJ do cliente
             cli.setCnpj_unidade(cliente.getCnpj_unidade());
 
-            // Obtém a nova unidade de negócio com base no CNPJ fornecido
             Optional<UnidadeDeNegocio> novaUnidade = unidadeRepository.findByCnpj(cliente.getCnpj_unidade());
 
-            // Verifica se a nova unidade de negócio existe
             if (novaUnidade.isPresent()) {
-                // Define o ID da nova unidade de negócio no cliente
                 cli.setUnidadeDeNegocio(novaUnidade.get());
             } else {
                 throw new RuntimeException("Unidade de negócio com o CNPJ fornecido não encontrada.");
             }
         }
 
-        // Salva o cliente atualizado no banco de dados
         this.repository.save(cli);
     }
 }

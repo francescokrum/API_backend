@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/unidadeDeNegocio")
+@CrossOrigin("*")
 public class UnidadeDeNegocioController {
 
     private final UnidadeDeNegocioService service;

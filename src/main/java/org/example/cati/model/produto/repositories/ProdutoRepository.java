@@ -1,7 +1,5 @@
 package org.example.cati.model.produto.repositories;
 
-import org.example.cati.model.cliente.Cliente;
-import org.example.cati.model.cliente.dto.ClienteDTO;
 import org.example.cati.model.produto.Produto;
 import org.example.cati.model.produto.dto.ProdutoDTO;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -35,7 +35,7 @@ public class UnidadeDeNegocioService {
 
     public void editarUnidadeDeNegocio(UnidadeDeNegocio unidadeDeNegocio) {
 
-        UnidadeDeNegocio unidade = this.repository.getReferenceById(unidadeDeNegocio.getId());
+        UnidadeDeNegocio unidade = (UnidadeDeNegocio) this.repository.getReferenceById(unidadeDeNegocio.getId());
 
         unidade.setNome(unidadeDeNegocio.getNome());
         unidade.setCnpj(unidadeDeNegocio.getCnpj());

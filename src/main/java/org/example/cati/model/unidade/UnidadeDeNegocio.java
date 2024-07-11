@@ -1,6 +1,7 @@
 package org.example.cati.model.unidade;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -33,7 +34,7 @@ public class UnidadeDeNegocio implements UnidadeDeNegocioDTO {
     @OneToMany(mappedBy = "unidadeDeNegocio")
     private List<Cliente> clientes;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "unidadeDeNegocio", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Produto> produtos;
 }

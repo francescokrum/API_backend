@@ -50,7 +50,12 @@ public class SecurityConfig  {
                         .requestMatchers(HttpMethod.GET, "/unidadeDeNegocio/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/unidadeDeNegocio/editarUnidadeDeNegocio").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/unidadeDeNegocio/{id}").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.POST,"/chamado/cadastrarChamado").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/chamado").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/chamado/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/chamado/editarChamado").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/chamado/{id}").hasRole("ADMIN")
+                        .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

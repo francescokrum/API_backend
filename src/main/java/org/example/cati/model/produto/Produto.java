@@ -1,5 +1,6 @@
 package org.example.cati.model.produto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -7,8 +8,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.cati.model.chamado.Chamado;
 import org.example.cati.model.produto.dto.ProdutoDTO;
 import org.example.cati.model.unidade.UnidadeDeNegocio;
+
+import java.util.List;
 
 @Entity(name = "produto")
 @Table(name = "produto")
@@ -28,5 +32,11 @@ public class Produto implements ProdutoDTO {
 
     @ManyToOne
     @JoinColumn(name = "id_unidade")
+    @JsonBackReference
     private UnidadeDeNegocio unidadeDeNegocio;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "produto")
+    private List<Chamado> chamados;
+
 }

@@ -1,10 +1,10 @@
 package org.example.cati.service;
 
-import org.example.cati.model.cliente.Cliente;
 import org.example.cati.model.produto.Produto;
 import org.example.cati.model.produto.dto.ProdutoDTO;
 import org.example.cati.model.produto.repositories.ProdutoRepository;
 import org.example.cati.model.unidade.UnidadeDeNegocio;
+import org.example.cati.model.unidade.dto.UnidadeDeNegocioDTO;
 import org.example.cati.model.unidade.repositories.UnidadeDeNegocioRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ public class ProdutoService {
             UnidadeDeNegocio unidadeDeNegocio = produto.getUnidadeDeNegocio();
             Optional<UnidadeDeNegocio> unidadeExistente = unidadeDeNegocioRepository.findById(unidadeDeNegocio.getId());
             if (unidadeExistente.isPresent()) {
-                produto.setUnidadeDeNegocio(unidadeExistente.get());
+                produto.setUnidadeDeNegocio((UnidadeDeNegocio) unidadeExistente.get());
             } else {
                 throw new RuntimeException("Unidade de negócio não encontrada.");
             }
@@ -63,7 +63,7 @@ public class ProdutoService {
             Optional<UnidadeDeNegocio> novaUnidade = unidadeDeNegocioRepository.findById(produto.getUnidadeDeNegocio().getId());
 
             if(novaUnidade.isPresent()){
-                prod.setUnidadeDeNegocio(novaUnidade.get());
+                prod.setUnidadeDeNegocio((UnidadeDeNegocio) novaUnidade.get());
             } else {
                 throw new RuntimeException("Unidade de negócio fornecida não encontrada.");
             }

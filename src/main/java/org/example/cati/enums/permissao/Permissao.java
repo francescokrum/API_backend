@@ -1,4 +1,4 @@
-package org.example.cati.model.permissao;
+package org.example.cati.enums.permissao;
 
 public enum Permissao {
     ADMIN("ROLE_ADMIN"),

@@ -5,7 +5,7 @@ create table usuario(
                         email varchar(50),
                         permissao varchar(40),
                         login varchar(25),
-                        senha varchar(25)
+                        senha varchar(100)
 );
 
 create table unidade_negocio(
@@ -15,21 +15,20 @@ create table unidade_negocio(
 );
 
 create table cliente(
-                        id_cliente serial not null primary key,
+                        id_usuario int primary key,
                         cnpj_unidade varchar(14),
                         id_unidade int,
-                        id_usuario int,
 
                         FOREIGN KEY (id_unidade) REFERENCES unidade_negocio(id_unidade),
                         FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );
 
 create table desenvolvedor(
-                              id_dev serial not null primary key,
+                              id_usuario serial not null primary key,
                               data_nasc DATE,
                               salario NUMERIC(19,2),
                               cargo varchar(50),
-                              id_usuario int,
+
                               FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );
 
@@ -48,11 +47,11 @@ create table chamado(
                         status varchar(50),
                         gravidade varchar(50),
                         recurso bytea,
-                        id_cliente int,
+                        id_usuario int,
                         id_produto int,
 
                         FOREIGN KEY (id_produto) REFERENCES produto(id_produto),
-                        FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
+                        FOREIGN KEY (id_usuario) REFERENCES cliente(id_usuario)
 );
 
 create table tarefa(
@@ -60,7 +59,7 @@ create table tarefa(
                        titulo varchar(50),
                        descricao TEXT,
                        status varchar(50),
-                       id_dev int,
+                       id_usuario int,
 
-                       FOREIGN KEY (id_dev) REFERENCES desenvolvedor(id_dev)
+                       FOREIGN KEY (id_usuario) REFERENCES desenvolvedor(id_usuario)
 );

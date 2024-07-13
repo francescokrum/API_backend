@@ -1,10 +1,5 @@
 package org.example.cati.model.chamado.dto;
 
-public interface ChamadoDTO {
+public record ChamadoDTO(String titulo, String descricao, Enum status, Enum gravidade) {
 
-    String getTitulo();
-    String getDescricao();
-    Enum getStatus();
-    Enum getGravidade();
-    byte[] getRecurso();
 }

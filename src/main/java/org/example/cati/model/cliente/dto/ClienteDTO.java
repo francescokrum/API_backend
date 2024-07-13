@@ -1,11 +1,5 @@
 package org.example.cati.model.cliente.dto;
 
-public interface ClienteDTO {
+public record ClienteDTO(String nome, String cpf, String email, String login, String senha, String cnpj_unidade) {
 
-    String getNome();
-    String getCpf();
-    String getEmail();
-    String getLogin();
-    String getSenha();
-    String getCnpj_unidade();
 }

@@ -5,16 +5,7 @@ import org.example.cati.enums.permissao.Permissao;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public interface DesenvolvedorDTO {
+public record DesenvolvedorDTO(Long id, String nome, String cpf, String email, String login, String senha,
+                               Date dataNasc, BigDecimal salario, String cargo) {
 
-    Long getId();
-    String getNome();
-    String getCpf();
-    String getEmail();
-    Permissao getPermissao();
-    String getLogin();
-    String getSenha();
-    Date getDataNasc();
-    BigDecimal getSalario();
-    String getCargo();
 }

@@ -1,11 +1,15 @@
 package org.example.cati.service;
 
+import jakarta.servlet.http.HttpServletRequest;
+import org.example.cati.infra.security.config.JwtServiceGenerator;
 import org.example.cati.model.tarefa.Tarefa;
+import org.example.cati.model.tarefa.dto.TarefaDTO;
 import org.example.cati.model.tarefa.repositories.TarefaRepository;
 import org.example.cati.model.desenvolvedor.Desenvolvedor;
 import org.example.cati.model.desenvolvedor.repositories.DesenvolvedorRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +18,12 @@ public class TarefaService {
 
     private final TarefaRepository tarefaRepository;
     private final DesenvolvedorRepository desenvolvedorRepository;
+    private final JwtServiceGenerator jwt;
 
-    public TarefaService(TarefaRepository tarefaRepository, DesenvolvedorRepository desenvolvedorRepository) {
+    public TarefaService(TarefaRepository tarefaRepository, DesenvolvedorRepository desenvolvedorRepository, JwtServiceGenerator jwt) {
         this.tarefaRepository = tarefaRepository;
         this.desenvolvedorRepository = desenvolvedorRepository;
+        this.jwt = jwt;
     }
 
     public void cadastrarTarefa(Tarefa tarefa) {
@@ -27,6 +33,18 @@ public class TarefaService {
         }
 
         this.tarefaRepository.save(tarefa);
+    }
+
+    public List<TarefaDTO> buscarTarefaPorDev(HttpServletRequest request){
+        String login = this.jwt.extractUsername(this.jwt.trataToken(request));
+        List<Tarefa> tarefas = this.tarefaRepository.buscarTarefaPorDev(login);
+        List<TarefaDTO> tarefasDTO = new ArrayList<>();
+
+        for(Tarefa tarefa : tarefas){
+            tarefasDTO.add(new TarefaDTO(tarefa.getId(), tarefa.getTitulo(), tarefa.getDescricao(),
+                    tarefa.getStatus()));
+        }
+        return tarefasDTO;
     }
 
     public List<Tarefa> buscarTarefas() {

@@ -1,8 +1,10 @@
 package org.example.cati.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.example.cati.model.tarefa.Tarefa;
+import org.example.cati.model.tarefa.dto.TarefaDTO;
 import org.example.cati.service.TarefaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +36,12 @@ public class TarefaController {
     @Transactional
     public List<Tarefa> buscaTarefas() {
         return this.service.buscarTarefas();
+    }
+
+    @GetMapping("/buscarTarefaPorDev")
+    @Transactional
+    public List<TarefaDTO> buscarTarefaPorDev(HttpServletRequest request){
+        return this.service.buscarTarefaPorDev(request);
     }
 
     @GetMapping("{id}")

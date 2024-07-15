@@ -1,5 +1,6 @@
 package org.example.cati.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.example.cati.model.cliente.Cliente;
@@ -31,24 +32,25 @@ public class ClienteController {
         return ResponseEntity.created(uri).body(cliente);
     }
 
-    @GetMapping("{id}")
-    @Transactional
-    public ClienteDTO buscarCliente(@PathVariable Long id) {
-        return this.service.buscarClientePorId(id);
-    }
-
     @GetMapping
     @Transactional
-    public List<ClienteDTO> listarClientes() {
+    public ClienteDTO buscarCliente(HttpServletRequest request) {
+        return this.service.buscarClientePorId(request);
+    }
+
+    @GetMapping("/clientes")
+    @Transactional
+    public List<Cliente> listarClientes() {
         return this.service.buscarClientes();
     }
 
     @PutMapping("/editarCliente")
     @Transactional
-    public ResponseEntity editarCliente(@RequestBody Cliente cliente) {
+    public ResponseEntity editarCliente(@RequestBody ClienteDTO cliente, HttpServletRequest request) {
 
-        this.service.editarCliente(cliente);
-        return ResponseEntity.ok().body(cliente);
+        this.service.editarCliente(cliente, request);
+
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("{id}")

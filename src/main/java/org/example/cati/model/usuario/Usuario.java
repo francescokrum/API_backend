@@ -28,23 +28,17 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
     private Long id;
-
     @NotBlank
     private String nome;
-
     @NotBlank
     private String cpf;
-
     @NotBlank
     private String email;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "permissao")
     private Permissao permissao;
-
     @NotBlank
     private String login;
-
     @NotBlank
     private String senha;
 

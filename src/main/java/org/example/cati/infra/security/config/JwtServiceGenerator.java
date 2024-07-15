@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.example.cati.model.usuario.Usuario;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,6 @@ public class JwtServiceGenerator {
     public String generateToken(Usuario userDetails) {
 
 
-        //AQUI VOCÊ PODE COLOCAR O QUE MAIS VAI COMPOR O PAYLOAD DO TOKEN
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("login", userDetails.getUsername());
         extraClaims.put("id", userDetails.getId().toString());
@@ -65,7 +65,6 @@ public class JwtServiceGenerator {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-
     public String extractUsername(String token) {
         return extractClaim(token,Claims::getSubject);
     }
@@ -73,6 +72,15 @@ public class JwtServiceGenerator {
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
+    }
+
+    public String trataToken(HttpServletRequest request) {
+
+        String authorization = request.getHeader("Authorization");
+        if (authorization != null && authorization.startsWith("Bearer")) {
+            return authorization.substring(7);
+        }
+        return null;
     }
 
 }

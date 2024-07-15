@@ -3,7 +3,7 @@ package org.example.cati.controller;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.example.cati.model.unidade.UnidadeDeNegocio;
-import org.example.cati.model.unidade.dto.UnidadeDeNegocioDTO;
+import org.example.cati.model.unidade.dto.UnidadeDTO;
 import org.example.cati.service.UnidadeDeNegocioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,13 +34,13 @@ public class UnidadeDeNegocioController {
 
     @GetMapping
     @Transactional
-    public List<UnidadeDeNegocioDTO> buscaUnidadesDeNegocio() {
+    public List<UnidadeDTO> buscaUnidadesDeNegocio() {
         return this.service.buscarUnidadeDeNegocio();
     }
 
     @GetMapping("{id}")
     @Transactional
-    public UnidadeDeNegocioDTO buscaUnidadeDeNegocio(@PathVariable Long id) {
+    public UnidadeDeNegocio buscaUnidadeDeNegocio(@PathVariable Long id) {
             return this.service.buscarUnidadeDeNegocioPorId(id);
     }
 

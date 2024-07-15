@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.cati.model.chamado.Chamado;
-import org.example.cati.model.cliente.dto.ClienteDTO;
 import org.example.cati.enums.permissao.Permissao;
 import org.example.cati.model.unidade.UnidadeDeNegocio;
 import org.example.cati.model.usuario.Usuario;
@@ -21,7 +20,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cliente extends Usuario implements ClienteDTO {
+public class Cliente extends Usuario {
 
     @NotBlank
     private String cnpj_unidade;

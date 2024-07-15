@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.cati.model.chamado.Chamado;
-import org.example.cati.model.desenvolvedor.dto.DesenvolvedorDTO;
 import org.example.cati.enums.permissao.Permissao;
 import org.example.cati.model.tarefa.Tarefa;
 import org.example.cati.model.usuario.Usuario;
@@ -22,7 +20,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Desenvolvedor extends Usuario implements DesenvolvedorDTO {
+public class Desenvolvedor extends Usuario {
 
     private Date dataNasc;
     @Column(columnDefinition = "MONEY")

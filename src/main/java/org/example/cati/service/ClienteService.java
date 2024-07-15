@@ -1,5 +1,7 @@
 package org.example.cati.service;
 
+import jakarta.servlet.http.HttpServletRequest;
+import org.example.cati.infra.security.config.JwtServiceGenerator;
 import org.example.cati.model.cliente.Cliente;
 import org.example.cati.model.cliente.dto.ClienteDTO;
 import org.example.cati.model.cliente.repositories.ClienteRepository;
@@ -22,11 +24,14 @@ public class ClienteService {
     private final UnidadeDeNegocioRepository unidadeRepository;
     private final PasswordEncoder passwordEncoder;
 
+    private final JwtServiceGenerator jwt;
+
     @Autowired
-    public ClienteService(ClienteRepository repository, UnidadeDeNegocioRepository unidadeRepository, PasswordEncoder passwordEncoder) {
+    public ClienteService(ClienteRepository repository, UnidadeDeNegocioRepository unidadeRepository, PasswordEncoder passwordEncoder, JwtServiceGenerator jwt) {
         this.repository = repository;
         this.unidadeRepository = unidadeRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwt = jwt;
     }
 
     public void cadastrarCliente(Cliente cliente) throws Exception {
@@ -48,45 +53,47 @@ public class ClienteService {
         }
     }
 
-    public List<ClienteDTO> buscarClientes() {
+    public List<Cliente> buscarClientes() {
         return this.repository.findAllBy();
     }
 
-    public ClienteDTO buscarClientePorId(Long id) {
-        return this.repository.findById(id).orElse(null);
+    public ClienteDTO buscarClientePorId(HttpServletRequest request) {
+
+        String login = this.jwt.extractUsername(this.jwt.trataToken(request));
+        Cliente usuario = this.repository.findByLogin(login);
+
+        return new ClienteDTO(usuario.getNome(), usuario.getCpf(), usuario.getEmail(),
+                usuario.getLogin(), usuario.getSenha(), usuario.getCnpj_unidade());
+
     }
 
     public void removerCliente(Long id) {
         this.repository.deleteById(id);
     }
 
-    public void editarCliente(Cliente cliente) {
+    public void editarCliente(ClienteDTO cliente, HttpServletRequest request) {
 
-        Cliente cli = this.repository.findById(cliente.getId()).orElse(null);
+        String login = this.jwt.extractUsername(this.jwt.trataToken(request));
+        Cliente usuario = this.repository.findByLogin(login);
 
-        String senhaCodificada = passwordEncoder.encode(cliente.getSenha());
-        cliente.setSenha(senhaCodificada);
+        usuario.setNome(cliente.nome());
+        usuario.setCpf(cliente.cpf());
+        usuario.setEmail(cliente.email());
+        usuario.setLogin(cliente.login());
+        usuario.setCnpj_unidade(cliente.cnpj_unidade());
 
-            cli.setNome(cliente.getNome());
-            cli.setCpf(cliente.getCpf());
-            cli.setEmail(cliente.getEmail());
-            cli.setPermissao(cliente.getPermissao());
-            cli.setLogin(cliente.getLogin());
-            cli.setSenha(senhaCodificada);
+            /*if (!usuario.getCnpj_unidade().equals(cliente.cnpj_unidade())) {
+                usuario.setCnpj_unidade(cliente.cnpj_unidade());
 
-            // Verificar se a unidade de negócio foi alterada
-            if (!cli.getCnpj_unidade().equals(cliente.getCnpj_unidade())) {
-                cli.setCnpj_unidade(cliente.getCnpj_unidade());
-
-                Optional<UnidadeDeNegocio> novaUnidade = unidadeRepository.findByCnpj(cliente.getCnpj_unidade());
+                Optional<UnidadeDeNegocio> novaUnidade = unidadeRepository.findByCnpj(cliente.cnpj_unidade());
 
                 if (novaUnidade.isPresent()) {
-                    cli.setUnidadeDeNegocio(novaUnidade.get());
+                    usuario.setUnidadeDeNegocio(novaUnidade.get());
                 } else {
                     throw new RuntimeException("Unidade de negócio com o CNPJ fornecido não encontrada.");
                 }
-            }
+            }*/
 
-            this.repository.save(cli);
+            this.repository.save(usuario);
     }
 }

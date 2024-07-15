@@ -1,7 +1,7 @@
 package org.example.cati.service;
 
 import org.example.cati.model.unidade.UnidadeDeNegocio;
-import org.example.cati.model.unidade.dto.UnidadeDeNegocioDTO;
+import org.example.cati.model.unidade.dto.UnidadeDTO;
 import org.example.cati.model.unidade.repositories.UnidadeDeNegocioRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +20,12 @@ public class UnidadeDeNegocioService {
         this.repository.save(unidadeDeNegocio);
     }
 
-    public List<UnidadeDeNegocioDTO> buscarUnidadeDeNegocio() {
+    public List<UnidadeDTO> buscarUnidadeDeNegocio() {
 
         return this.repository.findAllBy();
     }
 
-    public UnidadeDeNegocioDTO buscarUnidadeDeNegocioPorId(Long id) {
+    public UnidadeDeNegocio buscarUnidadeDeNegocioPorId(Long id) {
         return this.repository.findById(id).get();
     }
 

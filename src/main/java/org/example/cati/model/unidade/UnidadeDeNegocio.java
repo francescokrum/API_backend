@@ -1,6 +1,5 @@
 package org.example.cati.model.unidade;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.cati.model.cliente.Cliente;
 import org.example.cati.model.produto.Produto;
-import org.example.cati.model.unidade.dto.UnidadeDeNegocioDTO;
 
 import java.util.List;
 
@@ -20,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class UnidadeDeNegocio implements UnidadeDeNegocioDTO {
+public class UnidadeDeNegocio{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

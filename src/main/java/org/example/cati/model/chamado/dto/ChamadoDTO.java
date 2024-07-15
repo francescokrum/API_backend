@@ -1,5 +1,8 @@
 package org.example.cati.model.chamado.dto;
 
-public record ChamadoDTO(String titulo, String descricao, Enum status, Enum gravidade) {
+import org.example.cati.enums.gravidade.Gravidade;
+import org.example.cati.enums.status.StatusChamado;
+
+public record ChamadoDTO(Long id, String titulo, String descricao, StatusChamado status, Gravidade gravidade) {
 
 }

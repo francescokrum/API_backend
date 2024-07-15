@@ -9,11 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.cati.enums.gravidade.Gravidade;
 import org.example.cati.enums.status.StatusChamado;
-import org.example.cati.model.chamado.dto.ChamadoDTO;
 import org.example.cati.model.produto.Produto;
 import org.example.cati.model.cliente.Cliente;
-
-import java.util.List;
 
 @Entity(name = "chamado")
 @Table
@@ -21,7 +18,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Chamado implements ChamadoDTO {
+public class Chamado{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +33,10 @@ public class Chamado implements ChamadoDTO {
     @Enumerated(EnumType.STRING)
     private Gravidade gravidade;
     private byte[] recurso;
+
+    public Chamado(StatusChamado status) {
+        this.status = StatusChamado.SOLICITADO;
+    }
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")

@@ -1,9 +1,11 @@
 package org.example.cati.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.example.cati.model.chamado.Chamado;
 import org.example.cati.model.chamado.dto.ChamadoDTO;
+import org.example.cati.model.produto.dto.ProdutoDTO;
 import org.example.cati.service.ChamadoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +27,8 @@ public class ChamadoController {
 
     @PostMapping("/cadastrarChamado")
     @Transactional
-    public ResponseEntity cadastrarChamado(@RequestBody @Valid Chamado chamado, UriComponentsBuilder uriBuilder) {
-        this.service.cadastrarChamado(chamado);
+    public ResponseEntity cadastrarChamado(@RequestBody @Valid Chamado chamado, UriComponentsBuilder uriBuilder, HttpServletRequest request) {
+        this.service.cadastrarChamado(chamado, request);
         URI uri = uriBuilder.path("/chamados/{id}").buildAndExpand(chamado.getId()).toUri();
         return ResponseEntity.created(uri).body(chamado);
     }
@@ -37,11 +39,18 @@ public class ChamadoController {
         return this.service.buscarChamados();
     }
 
+    @GetMapping("/buscarChamadoPorCliente")
+    @Transactional
+    public List<ChamadoDTO> buscaChamadosPorCliente(HttpServletRequest request) {
+        return this.service.buscarChamadosPorCliente(request);
+    }
+
     @GetMapping("{id}")
     @Transactional
-    public ChamadoDTO buscaChamado(@PathVariable Long id) {
+    public Chamado buscaChamado(@PathVariable Long id) {
         return this.service.buscarChamadoPorId(id);
     }
+
 
     @PutMapping("/editarChamado")
     @Transactional

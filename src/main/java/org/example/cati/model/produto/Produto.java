@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.cati.model.chamado.Chamado;
-import org.example.cati.model.produto.dto.ProdutoDTO;
 import org.example.cati.model.unidade.UnidadeDeNegocio;
 
 import java.util.List;
@@ -20,7 +19,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Produto implements ProdutoDTO {
+public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

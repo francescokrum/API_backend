@@ -1,5 +1,6 @@
 package org.example.cati.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.example.cati.model.produto.Produto;
@@ -41,6 +42,12 @@ public class ProdutoController {
     @Transactional
     public Produto buscaProduto(@PathVariable Long id) {
         return this.service.buscarProdutoPorId(id);
+    }
+
+    @GetMapping("buscarProdutosPorCliente")
+    @Transactional
+    public List<ProdutoDTO> buscarProdutosPorCliente(HttpServletRequest request) {
+        return this.service.buscarProdutosPorCliente(request);
     }
 
     @PutMapping("/editarProduto")

@@ -25,6 +25,7 @@ public class Tarefa {
     private String titulo;
     @NotBlank
     private String descricao;
+    @Enumerated(EnumType.STRING)
     private StatusTarefa status;
 
     @ManyToOne

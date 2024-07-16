@@ -35,7 +35,7 @@ public class ChamadoController {
 
     @GetMapping
     @Transactional
-    public List<ChamadoDTO> buscaChamados() {
+    public List<Chamado> buscaChamados() {
         return this.service.buscarChamados();
     }
 

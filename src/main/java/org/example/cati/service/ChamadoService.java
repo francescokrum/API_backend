@@ -50,7 +50,7 @@ public class ChamadoService {
         this.chamadoRepository.save(chamado);
     }
 
-    public List<ChamadoDTO> buscarChamados() {
+    public List<Chamado> buscarChamados() {
         return this.chamadoRepository.findAllBy();
     }
 

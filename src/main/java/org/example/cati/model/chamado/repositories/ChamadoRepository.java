@@ -14,7 +14,7 @@ public interface ChamadoRepository extends JpaRepository<Chamado, Long> {
 
     Chamado getById(Long id);
     Optional<Chamado> findById(Long id);
-    List<ChamadoDTO> findAllBy();
+    List<Chamado> findAllBy();
 
     @Query(value = "SELECT c.id_chamado, c.titulo, c.descricao, c.status, c.gravidade, c.recurso, cli.id_usuario, p.id_produto " +
             "FROM chamado c " +

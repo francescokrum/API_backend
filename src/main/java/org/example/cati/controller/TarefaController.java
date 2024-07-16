@@ -52,7 +52,7 @@ public class TarefaController {
 
     @PutMapping("/editarTarefa")
     @Transactional
-    public ResponseEntity editarTarefa(@RequestBody Tarefa tarefa) {
+    public ResponseEntity editarTarefa(@RequestBody TarefaDTO tarefa) {
         this.service.editarTarefa(tarefa);
         return ResponseEntity.ok().body(tarefa);
     }

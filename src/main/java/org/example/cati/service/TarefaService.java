@@ -1,6 +1,7 @@
 package org.example.cati.service;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.example.cati.enums.status.StatusTarefa;
 import org.example.cati.infra.security.config.JwtServiceGenerator;
 import org.example.cati.model.tarefa.Tarefa;
 import org.example.cati.model.tarefa.dto.TarefaDTO;
@@ -28,6 +29,11 @@ public class TarefaService {
 
     public void cadastrarTarefa(Tarefa tarefa) {
         Long desenvolvedor = desenvolvedorRepository.getById(tarefa.getDesenvolvedor().getId()).getId();
+
+        if(tarefa.getStatus() == null){
+            tarefa.setStatus(StatusTarefa.ENVIADA);
+        }
+
         if (desenvolvedor == null) {
             throw new RuntimeException("Desenvolvedor não encontrado");
         }
@@ -59,18 +65,13 @@ public class TarefaService {
         this.tarefaRepository.deleteById(id);
     }
 
-    public void editarTarefa(Tarefa tarefa) {
-        Tarefa tarefaExistente = this.tarefaRepository.getReferenceById(tarefa.getId());
+    public void editarTarefa(TarefaDTO tarefa) {
 
-        tarefaExistente.setTitulo(tarefa.getTitulo());
-        tarefaExistente.setDescricao(tarefa.getDescricao());
-        tarefaExistente.setStatus(tarefa.getStatus());
+        Tarefa tarefaExistente = this.tarefaRepository.getReferenceById(tarefa.id());
 
-        Optional<Desenvolvedor> desenvolvedor = desenvolvedorRepository.findById(tarefa.getDesenvolvedor().getId());
-        if (!desenvolvedor.isPresent()) {
-            throw new RuntimeException("Desenvolvedor não encontrado");
-        }
-        tarefaExistente.setDesenvolvedor(desenvolvedor.get());
+        tarefaExistente.setTitulo(tarefa.titulo());
+        tarefaExistente.setDescricao(tarefa.descricao());
+        tarefaExistente.setStatus(tarefa.status());
 
         this.tarefaRepository.save(tarefaExistente);
     }

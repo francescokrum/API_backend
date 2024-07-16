@@ -8,6 +8,8 @@ import org.example.cati.model.cliente.repositories.ClienteRepository;
 import org.example.cati.model.unidade.UnidadeDeNegocio;
 import org.example.cati.model.unidade.repositories.UnidadeDeNegocioRepository;
 import org.example.cati.enums.permissao.Permissao;
+import org.example.cati.model.usuario.UsuarioDTO;
+import org.example.cati.model.usuario.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,14 +25,16 @@ public class ClienteService {
     private final ClienteRepository repository;
     private final UnidadeDeNegocioRepository unidadeRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UsuarioRepository usuarioRepository;
 
     private final JwtServiceGenerator jwt;
 
     @Autowired
-    public ClienteService(ClienteRepository repository, UnidadeDeNegocioRepository unidadeRepository, PasswordEncoder passwordEncoder, JwtServiceGenerator jwt) {
+    public ClienteService(ClienteRepository repository, UnidadeDeNegocioRepository unidadeRepository, PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository, JwtServiceGenerator jwt) {
         this.repository = repository;
         this.unidadeRepository = unidadeRepository;
         this.passwordEncoder = passwordEncoder;
+        this.usuarioRepository = usuarioRepository;
         this.jwt = jwt;
     }
 
@@ -51,6 +55,10 @@ public class ClienteService {
         } else {
             throw new Exception("CNPJ não existente");
         }
+    }
+
+    public List<UsuarioDTO> listarUsuarios(){
+        return this.usuarioRepository.findAllBy();
     }
 
     public List<Cliente> buscarClientes() {

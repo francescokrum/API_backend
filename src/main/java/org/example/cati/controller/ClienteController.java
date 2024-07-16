@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.example.cati.model.cliente.Cliente;
 import org.example.cati.model.cliente.dto.ClienteDTO;
+import org.example.cati.model.usuario.UsuarioDTO;
 import org.example.cati.service.ClienteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,12 @@ public class ClienteController {
         this.service.cadastrarCliente(cliente);
         URI uri = uriBuilder.path("/cliente/{id}").buildAndExpand(cliente.getId()).toUri();
         return ResponseEntity.created(uri).body(cliente);
+    }
+
+    @GetMapping("/buscarTodosUsuarios")
+    @Transactional
+    public List<UsuarioDTO> buscarTodosUsuarios(){
+        return this.service.listarUsuarios();
     }
 
     @GetMapping

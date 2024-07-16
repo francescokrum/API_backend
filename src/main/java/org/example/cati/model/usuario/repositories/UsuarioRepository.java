@@ -1,8 +1,10 @@
 package org.example.cati.model.usuario.repositories;
 
 import org.example.cati.model.usuario.Usuario;
+import org.example.cati.model.usuario.UsuarioDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
@@ -11,4 +13,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByEmail(String email);
     Optional<Usuario> findByLogin(String login);
     Optional<Usuario> findBySenha(String senha);
+
+    List<UsuarioDTO> findAllBy();
 }

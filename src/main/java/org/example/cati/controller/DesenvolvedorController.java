@@ -1,5 +1,6 @@
 package org.example.cati.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.example.cati.model.desenvolvedor.Desenvolvedor;
@@ -36,17 +37,17 @@ public class DesenvolvedorController {
         return this.service.buscarDevs();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/buscarDesenvolvedor")
     @Transactional
-    public Desenvolvedor buscaDesenvolvedor(@PathVariable Long id) {
-        return this.service.buscarDevPorId(id);
+    public DesenvolvedorDTO buscaDesenvolvedor(HttpServletRequest request) {
+        return this.service.buscarDevPorId(request);
     }
 
     @PutMapping("/editarDesenvolvedor")
     @Transactional
-    public ResponseEntity editarDesenvolvedor(@RequestBody Desenvolvedor desenvolvedor){
-        this.service.editarDev(desenvolvedor);
-        return ResponseEntity.ok().body(desenvolvedor);
+    public ResponseEntity editarDesenvolvedor(DesenvolvedorDTO desenvolvedor, HttpServletRequest request){
+        this.service.editarDev(desenvolvedor, request);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("{id}")

@@ -1,5 +1,7 @@
 package org.example.cati.service;
 
+import jakarta.servlet.http.HttpServletRequest;
+import org.example.cati.infra.security.config.JwtServiceGenerator;
 import org.example.cati.model.desenvolvedor.Desenvolvedor;
 import org.example.cati.model.desenvolvedor.dto.DesenvolvedorDTO;
 import org.example.cati.model.desenvolvedor.repositories.DesenvolvedorRepository;
@@ -16,11 +18,13 @@ public class DesenvolvedorService {
     private final DesenvolvedorRepository repository;
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtServiceGenerator jwt;
 
-    public DesenvolvedorService(DesenvolvedorRepository repository, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+    public DesenvolvedorService(DesenvolvedorRepository repository, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, JwtServiceGenerator jwt) {
         this.repository = repository;
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwt = jwt;
     }
 
     public void cadastrarDev(Desenvolvedor desenvolvedor) {
@@ -52,31 +56,34 @@ public class DesenvolvedorService {
         return this.repository.findAllBy();
     }
 
-    public Desenvolvedor buscarDevPorId(Long id) {
-        return this.repository.findById(id).get();
+    public DesenvolvedorDTO buscarDevPorId(HttpServletRequest request) {
+        String login = this.jwt.extractUsername(this.jwt.trataToken(request));
+        Desenvolvedor usuario = this.repository.findByLogin(login);
+
+        return new DesenvolvedorDTO(usuario.getId(), usuario.getNome(), usuario.getCpf(), usuario.getEmail(),
+                usuario.getLogin(), usuario.getSenha(), usuario.getDataNasc(), usuario.getSalario(), usuario.getCargo());
     }
 
     public void removerDev(Long id) {
         this.repository.deleteById(id);
     }
 
-    public void editarDev(Desenvolvedor desenvolvedor) {
+    public void editarDev(DesenvolvedorDTO desenvolvedor, HttpServletRequest request) {
+        String login = jwt.extractUsername(jwt.trataToken(request));
+        Desenvolvedor usuario = repository.findByLogin(login);
 
-        Desenvolvedor dev = this.repository.getReferenceById(desenvolvedor.getId());
+        // Verifica se a senha no DTO não é nula antes de codificar
+        if (desenvolvedor.senha() != null) {
+            String senhaCodificada = passwordEncoder.encode(desenvolvedor.senha());
+            usuario.setSenha(senhaCodificada);
+        }
 
-        String senhaCodificada = passwordEncoder.encode(desenvolvedor.getSenha());
-        desenvolvedor.setSenha(senhaCodificada);
+        // Atribui os demais atributos do DTO ao usuário
+        usuario.setNome(desenvolvedor.nome());
+        usuario.setCpf(desenvolvedor.cpf());
+        usuario.setEmail(desenvolvedor.email());
+        usuario.setLogin(desenvolvedor.login());
 
-        dev.setNome(desenvolvedor.getNome());
-        dev.setCpf(desenvolvedor.getCpf());
-        dev.setEmail(desenvolvedor.getEmail());
-        dev.setPermissao(desenvolvedor.getPermissao());
-        dev.setLogin(desenvolvedor.getLogin());
-        dev.setSenha(senhaCodificada);
-        dev.setDataNasc(desenvolvedor.getDataNasc());
-        dev.setSalario(desenvolvedor.getSalario());
-        dev.setCargo(desenvolvedor.getCargo());
-
-        this.repository.save(dev);
+        repository.save(usuario);
     }
 }

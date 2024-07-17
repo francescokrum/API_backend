@@ -80,22 +80,7 @@ public class ChamadoService {
     public void editarChamado(Chamado chamado) {
         Chamado chamadoExistente = this.chamadoRepository.getReferenceById(chamado.getId());
 
-        chamadoExistente.setTitulo(chamado.getTitulo());
-        chamadoExistente.setDescricao(chamado.getDescricao());
         chamadoExistente.setStatus(chamado.getStatus());
-        chamadoExistente.setGravidade(chamado.getGravidade());
-
-        Optional<Cliente> cliente = clienteRepository.findById(chamado.getCliente().getId());
-        if (!cliente.isPresent()) {
-            throw new RuntimeException("Cliente não encontrado");
-        }
-        chamadoExistente.setCliente(cliente.get());
-
-        Optional<Produto> produto = produtoRepository.findById(chamado.getProduto().getId());
-        if (!produto.isPresent()) {
-            throw new RuntimeException("Produto não encontrado");
-        }
-        chamadoExistente.setProduto(produto.get());
 
         this.chamadoRepository.save(chamadoExistente);
     }

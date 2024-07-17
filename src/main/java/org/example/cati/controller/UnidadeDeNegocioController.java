@@ -11,6 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/unidadeDeNegocio")
@@ -40,7 +41,7 @@ public class UnidadeDeNegocioController {
 
     @GetMapping("{id}")
     @Transactional
-    public UnidadeDeNegocio buscaUnidadeDeNegocio(@PathVariable Long id) {
+    public Optional<UnidadeDeNegocio> buscaUnidadeDeNegocio(@PathVariable Long id) {
             return this.service.buscarUnidadeDeNegocioPorId(id);
     }
 

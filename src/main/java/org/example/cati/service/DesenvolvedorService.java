@@ -60,7 +60,7 @@ public class DesenvolvedorService {
         String login = this.jwt.extractUsername(this.jwt.trataToken(request));
         Desenvolvedor usuario = this.repository.findByLogin(login);
 
-        return new DesenvolvedorDTO(usuario.getId(), usuario.getNome(), usuario.getCpf(), usuario.getEmail(),
+        return new DesenvolvedorDTO(usuario.getId(), usuario.getNome(), usuario.getCpf(), usuario.getEmail(), usuario.getPermissao(),
                 usuario.getLogin(), usuario.getSenha(), usuario.getDataNasc(), usuario.getSalario(), usuario.getCargo());
     }
 

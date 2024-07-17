@@ -69,10 +69,11 @@ public class ClienteService {
 
         String login = this.jwt.extractUsername(this.jwt.trataToken(request));
         Cliente usuario = this.repository.findByLogin(login);
+        ClienteDTO clienteDTO = new ClienteDTO(usuario.getNome(), usuario.getCpf(), usuario.getEmail(),
+                usuario.getLogin(), null, usuario.getCnpj_unidade());
 
-        return new ClienteDTO(usuario.getNome(), usuario.getCpf(), usuario.getEmail(),
-                usuario.getLogin(), usuario.getSenha(), usuario.getCnpj_unidade());
 
+        return clienteDTO;
     }
 
     public void removerCliente(Long id) {
@@ -88,20 +89,7 @@ public class ClienteService {
         usuario.setCpf(cliente.cpf());
         usuario.setEmail(cliente.email());
         usuario.setLogin(cliente.login());
-        usuario.setCnpj_unidade(cliente.cnpj_unidade());
 
-            /*if (!usuario.getCnpj_unidade().equals(cliente.cnpj_unidade())) {
-                usuario.setCnpj_unidade(cliente.cnpj_unidade());
-
-                Optional<UnidadeDeNegocio> novaUnidade = unidadeRepository.findByCnpj(cliente.cnpj_unidade());
-
-                if (novaUnidade.isPresent()) {
-                    usuario.setUnidadeDeNegocio(novaUnidade.get());
-                } else {
-                    throw new RuntimeException("Unidade de negócio com o CNPJ fornecido não encontrada.");
-                }
-            }*/
-
-            this.repository.save(usuario);
+        this.repository.save(usuario);
     }
 }

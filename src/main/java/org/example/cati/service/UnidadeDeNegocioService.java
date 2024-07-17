@@ -6,6 +6,7 @@ import org.example.cati.model.unidade.repositories.UnidadeDeNegocioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UnidadeDeNegocioService {
@@ -25,8 +26,8 @@ public class UnidadeDeNegocioService {
         return this.repository.findAllBy();
     }
 
-    public UnidadeDeNegocio buscarUnidadeDeNegocioPorId(Long id) {
-        return this.repository.findById(id).get();
+    public Optional<UnidadeDeNegocio> buscarUnidadeDeNegocioPorId(Long id) {
+        return this.repository.findById(id);
     }
 
     public void removerUnidadeDeNegocio(Long id) {

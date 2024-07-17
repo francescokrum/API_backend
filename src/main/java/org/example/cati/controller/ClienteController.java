@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.example.cati.model.cliente.Cliente;
 import org.example.cati.model.cliente.dto.ClienteDTO;
+import org.example.cati.model.cliente.dto.ClienteDTOSenha;
 import org.example.cati.model.usuario.UsuarioDTO;
 import org.example.cati.service.ClienteService;
 import org.springframework.http.ResponseEntity;
